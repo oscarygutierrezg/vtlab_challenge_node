@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "eb4065d3-e8b9-4a2a-b8db-904a1dc8f664",
+		"_postman_id": "392607a4-75e5-49cf-973d-9d930babcc67",
 		"name": "challenge_v1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -36,7 +36,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/api/v1/deliveries/?limit=15&page=1",
+							"raw": "http://localhost:4000/api/v1/deliveries/?when=2021-05-11T11:35:29.897Z&limit=15&page=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -49,6 +49,124 @@
 								""
 							],
 							"query": [
+								{
+									"key": "when",
+									"value": "2021-05-11T11:35:29.897Z"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/deliveries [FINDFILTER]",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dateFrom\": \"2021-05-11T11:35:29.807Z\",\n    \"dateTo\": \"2021-05-11T11:35:29.907Z\",\n    \"weight\": 48739\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/deliveries/filter/?limit=15&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"deliveries",
+								"filter",
+								""
+							],
+							"query": [
+								{
+									"key": "dateFrom",
+									"value": "2021-05-11T11:35:29.807Z",
+									"disabled": true
+								},
+								{
+									"key": "dateTo",
+									"value": "2021-05-11T11:35:29.907Z",
+									"disabled": true
+								},
+								{
+									"key": "weight",
+									"value": "48739",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/deliveries [FINDFILTER] Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"$match\": {\n            \"when\": {\n                \"$gte\": \"2021-05-11T11:35:29.807Z\",\n                \"$lt\": \"2021-05-11T11:35:29.907Z\"\n            }\n        }\n    },\n    {\n        \"$lookup\": {\n            \"from\": \"products\",\n            \"let\": {\n                \"products\": \"$products\"\n            },\n            \"pipeline\": [\n                {\n                    \"$match\": {\n                        \"$expr\": {\n                            \"$and\": [\n                                {\n                                    \"$in\": [\n                                        \"$_id\",\n                                        \"$$products\"\n                                    ]\n                                },\n                                {\n                                    \"$gte\": [\n                                        \"$weight\",\n                                        48739\n                                    ]\n                                }\n                            ]\n                        }\n                    }\n                }\n            ],\n            \"as\": \"products\"\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/deliveries/filter/?limit=15&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"deliveries",
+								"filter",
+								""
+							],
+							"query": [
+								{
+									"key": "dateFrom",
+									"value": "2021-05-11T11:35:29.807Z",
+									"disabled": true
+								},
+								{
+									"key": "dateTo",
+									"value": "2021-05-11T11:35:29.907Z",
+									"disabled": true
+								},
+								{
+									"key": "weight",
+									"value": "48739",
+									"disabled": true
+								},
 								{
 									"key": "limit",
 									"value": "15"
